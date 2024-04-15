@@ -1,17 +1,19 @@
 package fr.traitementfichier.entities;
 
-public class Stock {
-    Produit[] produits;
+import java.util.List;
 
-    public Stock(Produit[] produits) {
+public class Stock {
+    List<Produit> produits;
+
+    public Stock(List<Produit> produits) {
         this.produits = produits;
     }
 
-    public Produit[] getProduits() {
+    public List <Produit> getProduits() {
         return produits;
     }
 
-    public void setProduits(Produit[] produits) {
+    public void setProduits(List <Produit> produits) {
         this.produits = produits;
     }
 }

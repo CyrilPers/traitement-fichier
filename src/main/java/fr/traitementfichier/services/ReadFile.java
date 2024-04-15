@@ -12,15 +12,15 @@ import java.util.Collections;
 import java.util.List;
 
 public class ReadFile {
-    public static ArrayList<Produit> getProduits() throws IOException {
+    public static Stock getStock() throws IOException {
         Path pathOrigine = Paths.get("src/main/resources/open-food-facts.csv");
         boolean exists = Files.exists(pathOrigine);
         ArrayList<Produit> produits = new ArrayList<>();
         ArrayList<String> lines = (ArrayList<String>) Files.readAllLines(pathOrigine, StandardCharsets.UTF_8);
 
-
         if (exists) {
             for (int i = 1; i < lines.size(); i++) {
+
                 String[] tokens = lines.get(i).split("\\|");
                 Categorie categorie = new Categorie(tokens[0]);
                 Marque marque = new Marque(tokens[1]);
@@ -61,10 +61,11 @@ public class ReadFile {
                         additifs
                 );
                 produits.add(newProduit);
+
             }
-            return produits;
+            return new Stock(produits);
         }
-        return produits;
+        return new Stock(produits);
     }
 
     private static List<Additif> getAllAdditifs(String additifs) {
