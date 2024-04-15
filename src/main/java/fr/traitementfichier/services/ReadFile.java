@@ -12,6 +12,10 @@ import java.util.Collections;
 import java.util.List;
 
 public class ReadFile {
+    List<Additif> additifListAll = new ArrayList<>();
+    List<Ingredient> ingredientListAll = new ArrayList<>();
+    List<Allergene> allergenesListAll = new ArrayList<>();
+
     public static Stock getStock() throws IOException {
         Path pathOrigine = Paths.get("src/main/resources/open-food-facts.csv");
         boolean exists = Files.exists(pathOrigine);
@@ -68,34 +72,31 @@ public class ReadFile {
         return new Stock(produits);
     }
 
-    private static List<Additif> getAllAdditifs(String additifs) {
-        List<Additif> additifList = new ArrayList<>();
+    private List<Additif> getAllAdditifs(String additifs) {
         String[] additifNames = additifs.split(",");
         for (String additifName : additifNames) {
             Additif newAdditif = new Additif(additifName);
-            additifList.add(newAdditif);
+            additifListAll.add(newAdditif);
         }
         return additifList;
 
     }
 
-    private static List<Allergene> getAllergenes(String allergenes) {
+    private List<Allergene> getAllergenes(String allergenes) {
         String[] allergeneNames = allergenes.split(",");
-        List<Allergene> allergenesList = new ArrayList<>();
         for (String allergeneName : allergeneNames) {
             Allergene newAllergene = new Allergene(allergeneName);
-            allergenesList.add(newAllergene);
+            allergenesListAll.add(newAllergene);
         }
         return allergenesList;
 
     }
 
-    private static List<Ingredient> getIngredients(String ingredients) {
+    private List<Ingredient> getIngredients(String ingredients) {
         String[] ingredientNames = ingredients.split(",");
-        List<Ingredient> ingredientList = new ArrayList<>();
         for (String ingredientName : ingredientNames) {
             Ingredient newIngredient = new Ingredient(ingredientName);
-            ingredientList.add(newIngredient);
+            ingredientListAll.add(newIngredient);
         }
         return ingredientList;
     }
