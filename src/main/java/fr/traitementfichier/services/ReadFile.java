@@ -69,8 +69,8 @@ public class ReadFile {
     }
 
     private static List<Additif> getAllAdditifs(String additifs) {
-        String[] additifNames = additifs.split(",");
         List<Additif> additifList = new ArrayList<>();
+        String[] additifNames = additifs.split(",");
         for (String additifName : additifNames) {
             Additif newAdditif = new Additif(additifName);
             additifList.add(newAdditif);

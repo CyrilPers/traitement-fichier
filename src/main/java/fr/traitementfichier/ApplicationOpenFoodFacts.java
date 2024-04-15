@@ -27,13 +27,15 @@ public class ApplicationOpenFoodFacts {
                 rechercheProduitsMarque.traiter(stock, scanner);
                 break;
             case 2:
+                RechercheMeilleurProduitsCategorie rechercheProduitsCategorie = new RechercheMeilleurProduitsCategorie();
+                rechercheProduitsCategorie.traiter(stock, scanner);
 
             case 3:
                 RechercheMeilleurProduitsMarqueEtCategorie rechercheProduitsMarqueCategorie = new RechercheMeilleurProduitsMarqueEtCategorie();
                 rechercheProduitsMarqueCategorie.traiter(stock, scanner);
                 break;
             case 4:
-                AfficherAllergenesPlusCourants  afficherAllergenesPlusCourants = new AfficherAllergenesPlusCourants();
+                AfficherAllergenesPlusCourants afficherAllergenesPlusCourants = new AfficherAllergenesPlusCourants();
                 afficherAllergenesPlusCourants.traiter(stock, scanner);
             case 5:
                 AfficherAdditifsPlusCourants afficherAdditifsPlusCourants = new AfficherAdditifsPlusCourants();
