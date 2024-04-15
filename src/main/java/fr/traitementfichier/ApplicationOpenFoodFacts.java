@@ -1,9 +1,7 @@
 package fr.traitementfichier;
 
 import fr.traitementfichier.entities.Stock;
-import fr.traitementfichier.services.ReadFile;
-import fr.traitementfichier.services.RechercheMeilleurProduitsMarque;
-import fr.traitementfichier.services.RechercheMeilleurProduitsMarqueEtCategorie;
+import fr.traitementfichier.services.*;
 
 import java.io.IOException;
 import java.util.Scanner;
@@ -18,7 +16,7 @@ public class ApplicationOpenFoodFacts {
         System.out.print("2 - Rechercher les meilleurs produits pour une Catégorie donnée ");
         System.out.print("3 - Rechercher les meilleurs produits par Marque et par Catégorie ");
         System.out.print("4 - Afficher les allergènes les plus courants avec le nb de produits dans lesquels ils apparaissent. ");
-        System.out.print("4 - Afficher les additifs les plus courants avec le nb de produits dans lesquels ils apparaissent. ");
+        System.out.print("5 - Afficher les additifs les plus courants avec le nb de produits dans lesquels ils apparaissent. ");
 
         int choix = scanner.nextInt();
         scanner.nextLine();
@@ -29,9 +27,17 @@ public class ApplicationOpenFoodFacts {
                 rechercheProduitsMarque.traiter(stock, scanner);
                 break;
             case 2:
+
+            case 3:
                 RechercheMeilleurProduitsMarqueEtCategorie rechercheProduitsMarqueCategorie = new RechercheMeilleurProduitsMarqueEtCategorie();
                 rechercheProduitsMarqueCategorie.traiter(stock, scanner);
                 break;
+            case 4:
+                AfficherAllergenesPlusCourants  afficherAllergenesPlusCourants = new AfficherAllergenesPlusCourants();
+                afficherAllergenesPlusCourants.traiter(stock, scanner);
+            case 5:
+                AfficherAdditifsPlusCourants afficherAdditifsPlusCourants = new AfficherAdditifsPlusCourants();
+                afficherAdditifsPlusCourants.traiter(stock, scanner);
         }
     }
 }

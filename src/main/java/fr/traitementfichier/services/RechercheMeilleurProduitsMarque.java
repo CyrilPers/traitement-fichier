@@ -39,18 +39,17 @@ public class RechercheMeilleurProduitsMarque extends Menuservice {
             }
         } else {
             lettreScore = (char) (lettreScore + 1);
-            produitsMeilleurScore = getProduitsByScore(produitsMarque, lettreScore);
-            afficheMeilleursProduits(produitsMeilleurScore, lettreScore);
+            afficheMeilleursProduits(produitsMarque, lettreScore);
         }
     }
 
     protected static List<Produit> filterListBy (Stock stock, String nomMarque) {
-        List<Produit> produitsMarque = new ArrayList<>();
+        List<Produit> produitsFiltered = new ArrayList<>();
         stock.getProduits().forEach(produit -> {
             if (nomMarque.toLowerCase().equals(produit.getMarque().getNom().toLowerCase())) {
-                produitsMarque.add(produit);
+                produitsFiltered.add(produit);
             }
         });
-        return produitsMarque;
+        return produitsFiltered;
     }
 }
