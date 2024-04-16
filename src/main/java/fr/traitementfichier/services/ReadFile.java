@@ -17,6 +17,8 @@ public class ReadFile {
     static List<Additif> additifListAll = new ArrayList<>();
     static List<Ingredient> ingredientListAll = new ArrayList<>();
     static List<Allergene> allergenesListAll = new ArrayList<>();
+    static ArrayList<Categorie> categoriesListAll = new ArrayList<>();
+    static ArrayList<Marque> marquesListAll = new ArrayList<>();
 
     public static Stock getStock() throws IOException {
 
@@ -26,12 +28,13 @@ public class ReadFile {
         ArrayList<Produit> produits = new ArrayList<>();
         ArrayList<String> lines = (ArrayList<String>) Files.readAllLines(pathOrigine, StandardCharsets.UTF_8);
 
+
         if (exists) {
             for (int i = 1; i < lines.size(); i++) {
 
                 String[] tokens = lines.get(i).split("\\|");
-                Categorie categorie = new Categorie(tokens[0]);
-                Marque marque = new Marque(tokens[1]);
+                Categorie categorie = getCategorie(tokens[0]); // todo getCategorie
+                Marque marque = getMarque(tokens[1]); //
                 List<Ingredient> ingredients = getIngredients(tokens[4]);
                 Boolean presenceHuileDePalme = getPresenceHuilePalme(tokens[26]);
                 List<Allergene> allergenes = getAllergenes(tokens[27]);
@@ -76,6 +79,34 @@ public class ReadFile {
             return new Stock(produits);
         }
         return new Stock(produits);
+    }
+
+    private static Marque getMarque(String marqueName) {
+        Optional<Marque> marqueFound = marquesListAll.stream()
+                .filter(categorie -> categorie.getNom().equals(marqueName))
+                .findFirst();
+        if (marqueFound.isPresent()) {
+            return marqueFound.get();
+        } else {
+            Marque newMarque = new Marque(marqueName);
+            marquesListAll.add(newMarque);
+            return newMarque;
+        }
+
+    }
+
+    private static Categorie getCategorie(String categorieName) {
+        Optional<Categorie> categorieFound = categoriesListAll.stream()
+                .filter(categorie -> categorie.getLibelle().equals(categorieName))
+                .findFirst();
+        if (categorieFound.isPresent()) {
+            return categorieFound.get();
+        } else {
+            Categorie newCategorie = new Categorie(categorieName);
+            categoriesListAll.add(newCategorie);
+            return newCategorie;
+        }
+
     }
 
     private static Boolean getPresenceHuilePalme(String token) {
