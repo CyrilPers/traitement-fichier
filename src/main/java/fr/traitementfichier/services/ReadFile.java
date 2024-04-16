@@ -10,13 +10,17 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 public class ReadFile {
-    List<Additif> additifListAll = new ArrayList<>();
-    List<Ingredient> ingredientListAll = new ArrayList<>();
-    List<Allergene> allergenesListAll = new ArrayList<>();
+
+    static List<Additif> additifListAll = new ArrayList<>();
+    static List<Ingredient> ingredientListAll = new ArrayList<>();
+    static List<Allergene> allergenesListAll = new ArrayList<>();
 
     public static Stock getStock() throws IOException {
+
+
         Path pathOrigine = Paths.get("src/main/resources/open-food-facts.csv");
         boolean exists = Files.exists(pathOrigine);
         ArrayList<Produit> produits = new ArrayList<>();
@@ -29,9 +33,10 @@ public class ReadFile {
                 Categorie categorie = new Categorie(tokens[0]);
                 Marque marque = new Marque(tokens[1]);
                 List<Ingredient> ingredients = getIngredients(tokens[4]);
-                Boolean presenceHuileDeCalme = tokens[26].equals(0) ? false : true;
+                Boolean presenceHuileDePalme = getPresenceHuilePalme(tokens[26]);
                 List<Allergene> allergenes = getAllergenes(tokens[27]);
                 List<Additif> additifs = tokens.length >= 29 ? getAllAdditifs(tokens[28]) : Collections.emptyList();
+
                 Produit newProduit = new Produit(
                         tokens[2],
                         categorie,
@@ -60,55 +65,90 @@ public class ReadFile {
                         getValeurNutritionnelle(tokens[24]),
                         getValeurNutritionnelle(tokens[25]),
                         getValeurNutritionnelle(tokens[26]),
-                        presenceHuileDeCalme,
+                        presenceHuileDePalme,
                         allergenes,
                         additifs
                 );
                 produits.add(newProduit);
 
             }
+            System.out.println(allergenesListAll);
             return new Stock(produits);
         }
         return new Stock(produits);
     }
 
-    private List<Additif> getAllAdditifs(String additifs) {
+    private static Boolean getPresenceHuilePalme(String token) {
+        if (token.isEmpty()) {
+            return false;
+        } else {
+            return Double.parseDouble(token) != 0;
+        }
+    }
+
+    private static List<Additif> getAllAdditifs(String additifs) {
         String[] additifNames = additifs.split(",");
+        List<Additif> additifList = new ArrayList<>();
         for (String additifName : additifNames) {
-            Additif newAdditif = new Additif(additifName);
-            additifListAll.add(newAdditif);
-        }
-        return additifList;
-
-    }
-
-    private List<Allergene> getAllergenes(String allergenes) {
-        String[] allergeneNames = allergenes.split(",");
-        for (String allergeneName : allergeneNames) {
-            Allergene newAllergene = new Allergene(allergeneName);
-            allergenesListAll.add(newAllergene);
-        }
-        return allergenesList;
-
-    }
-
-    private List<Ingredient> getIngredients(String ingredients) {
-        String[] ingredientNames = ingredients.split(",");
-        for (String ingredientName : ingredientNames) {
-            Ingredient newIngredient = new Ingredient(ingredientName);
-            ingredientListAll.add(newIngredient);
-        }
-        return ingredientList;
-    }
-
-    private static double getValeurNutritionnelle(String valeurNutritionnelle) {
-        if (!valeurNutritionnelle.isEmpty()) {
-            try {
-                return Double.parseDouble(valeurNutritionnelle);
-            } catch (NumberFormatException e) {
-                return 0;
+            Optional<Additif> foundAdditif = additifListAll.stream()
+                    .filter(additif -> additif.getLibelle().equals(additifName))
+                    .findFirst();
+            if (foundAdditif.isPresent()) {
+                additifList.add(foundAdditif.get());
+            } else {
+                Additif newAdditif = new Additif(additifName);
+                additifListAll.add(newAdditif);
+                additifList.add(newAdditif);
             }
         }
-        return 0;
+        return additifList;
+}
+
+private static List<Allergene> getAllergenes(String allergenes) {
+    String[] allergeneNames = allergenes.split(",");
+    List<Allergene> allergenesList = new ArrayList<>();
+    for (String allergeneName : allergeneNames) {
+        Optional<Allergene> foundAllergene = allergenesListAll.stream()
+                .filter(allergene -> allergene.getLibelle().equals(allergeneName))
+                .findFirst();
+        if (foundAllergene.isPresent()) {
+            allergenesList.add(foundAllergene.get());
+        } else {
+            Allergene newAllergene = new Allergene(allergeneName);
+            allergenesListAll.add(newAllergene);
+            allergenesList.add(newAllergene);
+        }
     }
+    return allergenesList;
+}
+
+private static List<Ingredient> getIngredients(String ingredients) {
+    String[] ingredientNames = ingredients.split(",");
+    List<Ingredient> ingredientList = new ArrayList<>();
+    for (String ingredientName : ingredientNames) {
+        Optional<Ingredient> foundIngredient = ingredientListAll.stream()
+                .filter(ingredient -> ingredient.getLibelle().equals(ingredientName))
+                .findFirst();
+        if (foundIngredient.isPresent()) {
+            ingredientList.add(foundIngredient.get());
+        } else {
+            Ingredient newIngredient = new Ingredient(ingredientName);
+            ingredientListAll.add(newIngredient);
+            ingredientList.add(newIngredient);
+        }
+    }
+    return ingredientList;
+}
+
+private static double getValeurNutritionnelle(String valeurNutritionnelle) {
+    if (!valeurNutritionnelle.isEmpty()) {
+        try {
+            return Double.parseDouble(valeurNutritionnelle);
+        } catch (NumberFormatException e) {
+            return 0;
+        }
+    }
+    return 0;
+}
+
 }
