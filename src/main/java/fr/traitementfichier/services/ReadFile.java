@@ -75,7 +75,6 @@ public class ReadFile {
                 produits.add(newProduit);
 
             }
-            System.out.println(allergenesListAll);
             return new Stock(produits);
         }
         return new Stock(produits);

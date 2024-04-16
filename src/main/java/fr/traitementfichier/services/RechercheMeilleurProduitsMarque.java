@@ -1,6 +1,4 @@
 package fr.traitementfichier.services;
-
-import fr.traitementfichier.entities.Marque;
 import fr.traitementfichier.entities.Produit;
 import fr.traitementfichier.entities.Stock;
 
