@@ -31,7 +31,7 @@ public class ApplicationOpenFoodFacts {
             case 2:
                 RechercheMeilleurProduitsCategorie rechercheProduitsCategorie = new RechercheMeilleurProduitsCategorie();
                 rechercheProduitsCategorie.traiter(stock, scanner);
-
+                break;
             case 3:
                 RechercheMeilleurProduitsMarqueEtCategorie rechercheProduitsMarqueCategorie = new RechercheMeilleurProduitsMarqueEtCategorie();
                 rechercheProduitsMarqueCategorie.traiter(stock, scanner);
@@ -39,9 +39,11 @@ public class ApplicationOpenFoodFacts {
             case 4:
                 AfficherAllergenesPlusCourants afficherAllergenesPlusCourants = new AfficherAllergenesPlusCourants();
                 afficherAllergenesPlusCourants.traiter(stock, scanner);
+                break;
             case 5:
                 AfficherAdditifsPlusCourants afficherAdditifsPlusCourants = new AfficherAdditifsPlusCourants();
                 afficherAdditifsPlusCourants.traiter(stock, scanner);
+                break;
         }
     }
 }

@@ -11,6 +11,7 @@ public class AfficherAdditifsPlusCourants extends Menuservice{
         Map<String, Integer> additifsMap = new HashMap<>();
         stock.getProduits().forEach(produit -> {
             produit.getAdditifs().forEach(additif -> {
+                System.out.println(additif.getLibelle());
                 additifsMap.put(additif.getLibelle(), additifsMap.getOrDefault(additif.getLibelle(), 0) + 1);
             });
         });

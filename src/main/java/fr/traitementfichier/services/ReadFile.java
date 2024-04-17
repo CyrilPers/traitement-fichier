@@ -37,8 +37,8 @@ public class ReadFile {
                 Marque marque = getMarque(tokens[1]); //
                 List<Ingredient> ingredients = getIngredients(tokens[4]);
                 Boolean presenceHuileDePalme = getPresenceHuilePalme(tokens[26]);
-                List<Allergene> allergenes = getAllergenes(tokens[27]);
-                List<Additif> additifs = tokens.length >= 29 ? getAllAdditifs(tokens[28]) : Collections.emptyList();
+                List<Allergene> allergenes = tokens.length >= 29 ? getAllergenes(tokens[28]) : Collections.emptyList();
+                List<Additif> additifs = tokens.length >= 30 ? getAllAdditifs(tokens[29]) : Collections.emptyList();
 
                 Produit newProduit = new Produit(
                         tokens[2],

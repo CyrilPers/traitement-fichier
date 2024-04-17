@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class RechercheMeilleurProduitsCategorie extends RechercheMeilleurProduitsMarque{
+
     @Override
     public void traiter(Stock stock, Scanner scanner) {
         System.out.print("Entrez le nom de la catégorie dont vous souhaitez obtenir les meilleurs produits ");
