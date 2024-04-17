@@ -27,7 +27,7 @@ public class AfficherAdditifsPlusCourants extends Menuservice{
 
 
         for (Map.Entry<String, Integer> additif : additifsMapSorted.entrySet()) {
-            System.out.println(additif.getKey() + " nb produits: " + additif.getValue());
+            System.out.println(additif.getKey() + " | nb produits: " + additif.getValue());
         }
 
 
