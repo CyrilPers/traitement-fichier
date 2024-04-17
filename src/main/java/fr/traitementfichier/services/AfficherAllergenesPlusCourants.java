@@ -22,6 +22,7 @@ public class AfficherAllergenesPlusCourants extends Menuservice{
                         Map.Entry::getValue,
                         (oldValue, newValue) -> oldValue,
                         LinkedHashMap::new));
+        System.out.println("Les 10 allergènes les plus présents : ");
 
         for (Map.Entry<String, Integer> allergene : allergenesMapSorted.entrySet()) {
             System.out.println(allergene.getKey() + " nb produits: " + allergene.getValue());

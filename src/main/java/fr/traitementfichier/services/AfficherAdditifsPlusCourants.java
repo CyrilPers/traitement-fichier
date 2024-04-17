@@ -11,7 +11,6 @@ public class AfficherAdditifsPlusCourants extends Menuservice{
         Map<String, Integer> additifsMap = new HashMap<>();
         stock.getProduits().forEach(produit -> {
             produit.getAdditifs().forEach(additif -> {
-                System.out.println(additif.getLibelle());
                 additifsMap.put(additif.getLibelle(), additifsMap.getOrDefault(additif.getLibelle(), 0) + 1);
             });
         });
@@ -23,6 +22,8 @@ public class AfficherAdditifsPlusCourants extends Menuservice{
                         Map.Entry::getValue,
                         (oldValue, newValue) -> oldValue,
                         LinkedHashMap::new));
+
+        System.out.println("Les 10 additifs les plus présents : ");
 
 
         for (Map.Entry<String, Integer> additif : additifsMapSorted.entrySet()) {
